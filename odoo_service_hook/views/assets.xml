@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hook_assets_common" name="Post define service hook for Assets Common"/>
+    <template id="hook_assets_backend" name="Post define service hook for Assets Backend"/>
+    <template id="hook_assets_frontend" name="Post define service hook for Assets Frontend"/>
+
+    <template id="assets_common" name="odoo_service_hook assets common" inherit_id="web.assets_common" priority="1">
+        <xpath expr="//script[contains(@src, '/web/static/src/js/boot.js')]" position="replace">
+            <script type="text/javascript" src="/odoo_service_hook/static/src/js/boot.js"></script>
+            <t t-call="odoo_service_hook.hook_assets_common"/>
+        </xpath>
+    </template>
+
+    <template id="assets_backend" name="odoo_service_hook assets backend" inherit_id="web.assets_backend" priority="1">
+        <xpath expr="//script[1]" position="before">
+            <t t-call="odoo_service_hook.hook_assets_backend"/>
+        </xpath>
+    </template>
+
+    <template id="assets_frontend" name="odoo_service_hook assets frontend" inherit_id="web.assets_frontend" priority="1">
+        <xpath expr="//script[1]" position="before">
+            <t t-call="odoo_service_hook.hook_assets_frontend"/>
+        </xpath>
+    </template>
+</odoo>
